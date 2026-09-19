@@ -1,0 +1,8 @@
+.idea/
+.venv/
+__pycache__/
+*.pyc
+*.csv
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
