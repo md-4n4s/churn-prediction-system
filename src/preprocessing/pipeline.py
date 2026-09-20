@@ -7,20 +7,19 @@ def main():
     customer_info = load_data(INPUT_DIR / "customer_info.csv", dates=["SignupDate"])
     usage_data = load_data(INPUT_DIR / "usage_data.csv", dates=["Month"])
 
-    churn_labels = standardize_column_names(churn_labels)
-    customer_info = standardize_column_names(customer_info)
-    usage_data = standardize_column_names(usage_data)
-
-    customer_info = drop_unnecessary_columns(customer_info, ["Age"])
-
-    customer_info = drop_duplicates(customer_info, ["CustomerID"])
-
-    customer_info = fix_invalid_monthly_charges(customer_info)
+    churn_labels = clean(churn_labels)
+    customer_info = clean(customer_info)
+    usage_data = clean(usage_data)
 
     # Merge 3 datasets into one using CustomerID
     df = churn_labels.merge(customer_info, on="CustomerID").merge(
         usage_data, on="CustomerID"
     )
+
+    df = aggregate(df)
+
+    # Drop all duplicates to have one row per customer
+    df = drop_duplicates(df, ["CustomerID"])
 
     return df
 
