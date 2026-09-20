@@ -1,4 +1,12 @@
-from src.preprocessing.cleaner import *
+import pandas as pd
+
+from src.preprocessing.cleaner import (
+    clean,
+    drop_duplicates,
+    drop_unnecessary_columns,
+    fix_invalid_monthly_charges,
+    standardize_column_names,
+)
 
 
 def test_standardize_column_names() -> None:
@@ -57,4 +65,15 @@ def test_fix_invalid_monthly_charges() -> None:
     expected = pd.DataFrame({"MonthlyCharges": [10, 20, 15]})
 
     result = fix_invalid_monthly_charges(original)
+
+    pd.testing.assert_frame_equal(result, expected)
+
+
+def test_clean() -> None:
+    original = pd.DataFrame({"  Age": [10, 20, 20], "Marks": [10, 20, 20]})
+
+    expected = pd.DataFrame({"Age": [10, 20], "Marks": [10, 20]})
+
+    result = clean(original)
+
     pd.testing.assert_frame_equal(result, expected)
