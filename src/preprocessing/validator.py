@@ -42,35 +42,27 @@ def check_columns(df: pd.DataFrame, columns: list) -> None:
     if missing_columns:
         raise MissingColumnException(f"Missing columns: {missing_columns}")
 
-
-def validate_id(df: pd.DataFrame, column: str, dtype: str) -> None:
+def validate_simple(df: pd.DataFrame, column: str, dtype: str) -> None:
     check_missing_values(df, column)
 
     check_dtype(df, column, dtype)
+
+def validate_id(df: pd.DataFrame, column: str, dtype: str) -> None:
+    validate_simple(df, column, dtype)
 
     check_duplicated(df, column)
 
 
 def validate_category(df: pd.DataFrame, column: str, dtype: str, allowed: int) -> None:
-    check_missing_values(df, column)
-
-    check_dtype(df, column, dtype)
+    validate_id(df, column, dtype)
 
     check_unique_values(df, column, allowed)
 
 
 def validate_positive(df: pd.DataFrame, column: str, dtype: str) -> None:
-    check_missing_values(df, column)
-
-    check_dtype(df, column, dtype)
+    validate_simple(df, column, dtype)
 
     check_negative(df, column)
-
-
-def validate_simple(df: pd.DataFrame, column: str, dtype: str) -> None:
-    check_missing_values(df, column)
-
-    check_dtype(df, column, dtype)
 
 
 def validate(df: pd.DataFrame) -> None:
