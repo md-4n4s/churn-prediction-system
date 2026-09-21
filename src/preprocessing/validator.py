@@ -42,10 +42,12 @@ def check_columns(df: pd.DataFrame, columns: list) -> None:
     if missing_columns:
         raise MissingColumnException(f"Missing columns: {missing_columns}")
 
+
 def validate_simple(df: pd.DataFrame, column: str, dtype: str) -> None:
     check_missing_values(df, column)
 
     check_dtype(df, column, dtype)
+
 
 def validate_id(df: pd.DataFrame, column: str, dtype: str) -> None:
     validate_simple(df, column, dtype)
