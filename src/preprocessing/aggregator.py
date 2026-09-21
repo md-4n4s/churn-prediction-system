@@ -4,7 +4,7 @@ from .cleaner import drop_unnecessary_columns
 
 
 def aggregate_call_minutes(df: pd.DataFrame) -> pd.DataFrame:
-    """ Replace monthly call-minute values with customer-level aggregate features """
+    """Replace monthly call-minute values with customer-level aggregate features"""
 
     df["CallMinutes_Mean"] = df.groupby("CustomerID")["CallMinutes"].transform("mean")
 
@@ -32,7 +32,7 @@ def aggregate_call_minutes(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def aggregate_data_usage(df: pd.DataFrame) -> pd.DataFrame:
-    """ Replace monthly data-usage values with customer-level aggregate features """
+    """Replace monthly data-usage values with customer-level aggregate features"""
 
     df["DataUsageGB_Mean"] = df.groupby("CustomerID")["DataUsageGB"].transform("mean")
 
@@ -55,7 +55,7 @@ def aggregate_data_usage(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def aggregate_sms_count(df: pd.DataFrame) -> pd.DataFrame:
-    """ Replace monthly sms-count values with customer-level aggregate features """
+    """Replace monthly sms-count values with customer-level aggregate features"""
 
     df["SMSCount_Mean"] = df.groupby("CustomerID")["SMSCount"].transform("mean")
 
@@ -65,7 +65,7 @@ def aggregate_sms_count(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def aggregate_complaints(df: pd.DataFrame) -> pd.DataFrame:
-    """ Replace monthly complaints values with customer-level aggregate features """
+    """Replace monthly complaints values with customer-level aggregate features"""
 
     df["Complaints_Mean"] = df.groupby("CustomerID")["Complaints"].transform("mean")
 
@@ -82,5 +82,7 @@ def aggregate(df: pd.DataFrame) -> pd.DataFrame:
     df = aggregate_sms_count(df)
 
     df = aggregate_complaints(df)
+
+    df = drop_unnecessary_columns(df, ["Month"])
 
     return df
