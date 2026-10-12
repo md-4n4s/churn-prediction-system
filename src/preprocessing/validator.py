@@ -10,7 +10,12 @@ def check_missing_values(df: pd.DataFrame, column: str) -> None:
 
 
 def check_duplicated(df: pd.DataFrame, column: str) -> None:
-    if df[column].duplicated().any():
+    if df[column].duplicated().any() and column not in [
+        "Churn",
+        "Gender",
+        "Region",
+        "ContractType",
+    ]:
         raise InvalidFieldException(f"Column {column} has duplicate values.")
 
 

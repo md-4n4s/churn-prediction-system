@@ -1,7 +1,9 @@
+from src.preprocessing.config import OUTPUT_DIR
+
 from . import *
 
 
-def main():
+def pipeline() -> None:
 
     churn_labels = load_data(INPUT_DIR / "churn_labels.csv")
     customer_info = load_data(INPUT_DIR / "customer_info.csv", dates=["SignupDate"])
@@ -25,8 +27,8 @@ def main():
 
     validate(df)
 
-    return df
+    df.to_csv(OUTPUT_DIR, index=False)
 
 
 if __name__ == "__main__":
-    main()
+    pipeline()
